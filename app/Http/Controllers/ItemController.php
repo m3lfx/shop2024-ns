@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Stock;
 
 use Validator;
 use Storage;
@@ -67,6 +68,11 @@ class ItemController extends Controller
         );
         $item->img_path = 'storage/items/images/'.$name;
         $item->save();
+
+        $stock = new Stock();
+        $stock->item_id = $item->item_id;
+        $stock->quantity = $request->quantity;
+        $stock->save();
         return redirect()->route('items.index');
     }
 
