@@ -10,7 +10,7 @@
         {!! Form::label('sell_price', 'sell price') !!}
         {!! Form::text('sell_price', $item->sell_price, ['class' => 'form-control']) !!}
         {!! Form::label('quantity', 'quantity') !!}
-        {!! Form::number('quantity',$item->quantity, ['class' => 'form-control']) !!}
+        {!! Form::number('quantity', $item->quantity, ['class' => 'form-control']) !!}
         {!! Form::label('img_path', 'upload image', ['class' => 'form-control']) !!}
         {!! Form::file('img_path',  ['class' => 'form-control']) !!}
         @error('img_path')
