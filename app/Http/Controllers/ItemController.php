@@ -97,7 +97,9 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = DB::table('item')->join('stock', 'item.item_id', '=', 'stock.item_id')->where('item.item_id',$id)->first();
+        // dd($items);
+        return view('item.edit', compact('item'));
     }
 
     /**

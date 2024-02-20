@@ -36,7 +36,7 @@
                             <td>{{ $item->cost_price }}</td>
                             <td>{{ $item->quantity }}</td>
                             @if ($item->deleted_at === null)
-                                <td><a href="#"><i class="fas fa-edit"></i></a>
+                                <td><a href="{{route('items.edit', $item->item_id)}}"><i class="fas fa-edit"></i></a>
                                     <form action="#" method="POST">
                                         @method('DELETE')
                                         @csrf
