@@ -16,7 +16,6 @@ class AddImgPathToItem extends Migration
         Schema::table('item', function (Blueprint $table) {
             $table->text('img_path');
             $table->timestamps();
-            
         });
     }
 

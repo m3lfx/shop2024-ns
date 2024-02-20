@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div id="items" class="container">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#itemModal">add<span
-                class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+      <a class="btn btn-primary" href="{{route('items.create')}}" role="button">add</a>
         <div class="card-body" style="height: 210px;">
             <input type="text" id='itemSearch' placeholder="--search--">
         </div>
@@ -24,8 +23,7 @@
                         <tr>
                             <td>{{ $item->item_id }}</td>
                             @if ($item->img_path)
-                                <td><img src="{{ url($item->img_path) }}" alt="item image" width="50"
-                                        height="50">
+                                <td><img src="{{ url($item->img_path) }}" alt="item image" width="50" height="50">
                                 </td>
                             @else
                                 <td><img src="#" alt="item image" width="50" height="50">
@@ -65,8 +63,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="iform" method="{{route('items.store')}}" action="POST" enctype="multipart/form-data">
-@csrf
+                    <form id="iform" method="{{ route('items.store') }}" action="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label for="desc" class="control-label">Description</label>
                             <input type="text" class="form-control" id="desc" name="description">
@@ -81,13 +79,13 @@
                         </div>
                         <div class="form-group">
                             <label for="image" class="control-label">Image</label>
-                            <input type="file" class="form-control" id="image" name="uploads" />
+                            <input type="file" class="form-control" id="image" name="img_path" />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="itemSubmit" type="submit" class="btn btn-primary">Save</button>
+                    {!! Form::submit('submit', ['class' => 'btn btn-primary']) !!}
                 </div>
 
             </div>

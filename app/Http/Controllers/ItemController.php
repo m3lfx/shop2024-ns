@@ -28,7 +28,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+       return view('item.create');
     }
 
     /**
@@ -39,6 +39,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->description);
         $rules = [
             'img_path' => 'mimes:jpg,bmp,png',
            
@@ -52,7 +53,7 @@ class ItemController extends Controller
                         ->withInput();
         }
         $item = new Item();
-        $item->name = $request->desription;
+        $item->description = $request->description;
         $item->sell_price = $request->sell_price;
         $item->cost_price = $request->cost_price;
        
