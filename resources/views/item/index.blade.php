@@ -32,10 +32,10 @@
 
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->sell_price }}</td>
-
-                            {{-- @if ($item->deleted_at === null)
-                                <td><a href="{{ route('items.edit', $item->id) }}"><i class="fas fa-edit"></i></a>
-                                    <form action="{{ route('items.destroy', $item->id) }}" method="POST">
+                            <td>{{ $item->cost_price }}</td>
+                            @if ($item->deleted_at === null)
+                                <td><a href="#"><i class="fas fa-edit"></i></a>
+                                    <form action="#" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button><i class="fas fa-trash" style="color:red"></i></button>
@@ -48,7 +48,7 @@
                                     <a href="{{ route('items.restore', $item->id) }}"><i
                                             class="fa-solid fa-rotate-left" style="color:blue"></i></a>
                                 </td>
-                            @endif --}}
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
