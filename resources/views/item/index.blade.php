@@ -65,8 +65,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="iform" method="#" action="#" enctype="multipart/form-data">
-
+                    <form id="iform" method="{{route('items.store')}}" action="POST" enctype="multipart/form-data">
+@csrf
                         <div class="form-group">
                             <label for="desc" class="control-label">Description</label>
                             <input type="text" class="form-control" id="desc" name="description">
