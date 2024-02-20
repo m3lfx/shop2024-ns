@@ -154,6 +154,8 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::destroy($id);
+        Stock::destroy($id);
+        return redirect()->route('items.index');
     }
 }

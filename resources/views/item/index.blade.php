@@ -37,7 +37,7 @@
                             <td>{{ $item->quantity }}</td>
                             @if ($item->deleted_at === null)
                                 <td><a href="{{route('items.edit', $item->item_id)}}"><i class="fas fa-edit"></i></a>
-                                    <form action="#" method="POST">
+                                    <form action="{{route('items.destroy', $item->item_id)}}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button><i class="fas fa-trash" style="color:red"></i></button>
