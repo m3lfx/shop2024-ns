@@ -164,4 +164,22 @@ class ItemController extends Controller
         $items = DB::table('item')->join('stock', 'item.item_id', '=', 'stock.item_id')->get();
         return view('shop.index', compact('items'));
     }
+
+    public function addToCart($id)
+    {
+        $item = Item::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        dd($oldCart);
+        $cart = new Cart($oldCart);
+        // dd($cart);
+        $cart->add($item, $item->item_id);
+
+        Session::put('cart', $cart);
+        // dd(Session::get('cart'));
+        // $request->session()->save();
+        Session::save();
+        // dd(Session::get('cart'));
+
+        return redirect('/');
+    }
 }

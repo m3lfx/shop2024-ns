@@ -16,5 +16,6 @@ use App\Http\Controllers\ItemController;
 
 
 Route::get('/', [ItemController::class, 'getItems'])->name('getItems');
+Route::get('add-to-cart/{id}', [ItemController::class, 'addToCart'])->name('addToCart');
 
 Route::resource('items', ItemController::class);
