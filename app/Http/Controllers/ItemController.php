@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Stock;
+use App\Models\Order;
 use App\Cart;
 
 use Validator;
@@ -225,7 +226,7 @@ class ItemController extends Controller
         return redirect()->route('getCart');
     }
 
-    public function postCheckout(Request $request){
+    public function postCheckout(){
         if (!Session::has('cart')) {
             return redirect()->route('getCart');
         }
