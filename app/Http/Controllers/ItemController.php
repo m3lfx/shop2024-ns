@@ -192,6 +192,7 @@ class ItemController extends Controller
         }
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
+        // dd($cart);
         return view('shop.shopping-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
     }
 }
