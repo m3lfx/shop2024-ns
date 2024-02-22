@@ -31,7 +31,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-       return view('item.create');
+        return view('item.create');
     }
 
     /**
@@ -45,30 +45,30 @@ class ItemController extends Controller
         // dd($request->description);
         $rules = [
             'img_path' => 'mimes:jpg,bmp,png',
-           
+
         ];
-       
+
         $validator = Validator::make($request->all(), $rules);
-        
-         if ($validator->fails()) {
+
+        if ($validator->fails()) {
             return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         $item = new Item();
         $item->description = $request->description;
         $item->sell_price = $request->sell_price;
         $item->cost_price = $request->cost_price;
-       
+
         $name = $request->file('img_path')->getClientOriginalName();
-        $extension =$request->file('img_path')->getClientOriginalExtension();
+        $extension = $request->file('img_path')->getClientOriginalExtension();
 
         $path = Storage::putFileAs(
             'public/items/images',
             $request->file('img_path'),
             $name
         );
-        $item->img_path = 'storage/items/images/'.$name;
+        $item->img_path = 'storage/items/images/' . $name;
         $item->save();
 
         $stock = new Stock();
@@ -97,7 +97,7 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        $item = DB::table('item')->join('stock', 'item.item_id', '=', 'stock.item_id')->where('item.item_id',$id)->first();
+        $item = DB::table('item')->join('stock', 'item.item_id', '=', 'stock.item_id')->where('item.item_id', $id)->first();
         // dd($items);
         return view('item.edit', compact('item'));
     }
@@ -113,34 +113,34 @@ class ItemController extends Controller
     {
         $rules = [
             'img_path' => 'mimes:jpg,bmp,png',
-           
+
         ];
-       
+
         $validator = Validator::make($request->all(), $rules);
-        
-         if ($validator->fails()) {
+
+        if ($validator->fails()) {
             return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         $item = Item::find($id);
         $item->description = $request->description;
         $item->sell_price = $request->sell_price;
         $item->cost_price = $request->cost_price;
-       
+
         $name = $request->file('img_path')->getClientOriginalName();
-       
+
 
         $path = Storage::putFileAs(
             'public/items/images',
             $request->file('img_path'),
             $name
         );
-        $item->img_path = 'storage/items/images/'.$name;
+        $item->img_path = 'storage/items/images/' . $name;
         $item->save();
 
         $stock = Stock::find($id);
-        
+
         $stock->quantity = $request->quantity;
         $stock->save();
         return redirect()->route('items.index');
@@ -157,5 +157,11 @@ class ItemController extends Controller
         $item = Item::destroy($id);
         Stock::destroy($id);
         return redirect()->route('items.index');
+    }
+
+    public function getItems()
+    {
+        $items = DB::table('item')->join('stock', 'item.item_id', '=', 'stock.item_id')->get();
+        return view('shop.index', compact('items'));
     }
 }
