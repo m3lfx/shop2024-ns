@@ -209,4 +209,18 @@ class ItemController extends Controller
         }
         return redirect()->route('getCart');
     }
+
+    public function getRemoveItem($id)
+    {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        if (count($cart->items) > 0) {
+            Session::put('cart', $cart);
+            Session::save();
+        } else {
+            Session::forget('cart');
+        }
+        return redirect()->route('getCart');
+    }
 }

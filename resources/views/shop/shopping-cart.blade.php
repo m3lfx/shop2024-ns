@@ -20,10 +20,10 @@
                                     <ul class="dropdown-menu">
                                       
                                         <li><a href="{{ route('reduceByOne',$product['item']['item_id']) }}">Reduce By 1</a></li>
-                                        {{-- <li><a href="{{ route('removeItem',$product['item']['item_id']) }}">Reduce All</a></li> --}}
+                                        <li><a href="{{ route('removeItem',$product['item']['item_id']) }}">Reduce All</a></li>
 
                                         {{-- <li><a href="#">Reduce By 1</a></li>  --}}
-                                         <li><a href="#">Reduce All</a></li>
+                                         {{-- <li><a href="#">Reduce All</a></li> --}}
                                     </ul>
                                 </div>
                             </li>
