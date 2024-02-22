@@ -11,6 +11,7 @@ use Validator;
 use Storage;
 use DB;
 use Session;
+use Carbon\Carbon;
 
 class ItemController extends Controller
 {
@@ -222,5 +223,56 @@ class ItemController extends Controller
             Session::forget('cart');
         }
         return redirect()->route('getCart');
+    }
+
+    public function postCheckout(Request $request){
+        if (!Session::has('cart')) {
+            return redirect()->route('getCart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        // dd($cart->items);
+        try {
+            DB::beginTransaction();
+            $order = new Order();
+
+            // $customer =  Customer::where('user_id',Auth::id())->first();
+            // dd($cart->items);
+	        // $customer->orders()->save($order);
+            $order->customer_id = 1;
+            $order->date_placed = now();
+            $order->date_shipped = Carbon::now()->addDays(5);
+            // $order->shipvia = $request->shipper_id;
+            // $order->shipping = $request->shipping;
+            $order->shipping = 10.00  ;
+            $order->status = 'Processing';
+            $order->save();
+            // dd($cart->items);
+    	    foreach($cart->items as $items){
+        		$id = $items['item']['item_id'];
+                // dd($id);
+                DB::table('orderline')->insert(
+                    ['item_id' => $id, 
+                     'orderinfo_id' => $order->orderinfo_id,
+                     'quantity' => $items['qty']
+                    ]
+                    );
+        		
+                $stock = Stock::find($id);
+          		$stock->quantity = $stock->quantity - $items['qty'];
+         		$stock->save();
+            }
+            // dd($order);
+        }
+        catch (\Exception $e) {
+            // dd($e->getMessage());
+	        DB::rollback();
+            // dd($order);
+            return redirect()->route('getCart')->with('error', $e->getMessage());
+        }
+    
+        DB::commit();
+        Session::forget('cart');
+        return redirect('/')->with('success','Successfully Purchased Your Products!!!');
     }
 }
