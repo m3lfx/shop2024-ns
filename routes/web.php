@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::prefix('user')->group(function () {
     Route::post('signin', [UserController::class,'postSignin'])->name('user.signin');
     // Route::get('profile', [UserController::class, 'getProfile'])->name('user.profile');
 });
-
+Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
 Route::get('logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::resource('items', ItemController::class);
