@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Stock;
 use App\Models\Order;
+use App\Models\Customer;
 use App\Cart;
 
 use Validator;
@@ -13,6 +14,7 @@ use Storage;
 use DB;
 use Session;
 use Carbon\Carbon;
+use Auth;
 
 class ItemController extends Controller
 {
@@ -237,10 +239,10 @@ class ItemController extends Controller
             DB::beginTransaction();
             $order = new Order();
 
-            // $customer =  Customer::where('user_id',Auth::id())->first();
+            $customer =  Customer::where('user_id', Auth::id())->first();
             // dd($cart->items);
 	        // $customer->orders()->save($order);
-            $order->customer_id = 1;
+            $order->customer_id = $customer->customer_id;
             $order->date_placed = now();
             $order->date_shipped = Carbon::now()->addDays(5);
             // $order->shipvia = $request->shipper_id;
