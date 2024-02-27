@@ -28,7 +28,7 @@ Route::prefix('user')->group(function () {
     Route::get('register', [UserController::class, 'register'])->name('user.register');
     Route::post('signup', [UserController::class, 'postSignup'])->name('user.signup');
     Route::get('login', [UserController::class, 'login'])->name('user.login');
-    // Route::post('signin', [UserController::class,'postSignin'])->name('user.sign-in');
+    Route::post('signin', [UserController::class,'postSignin'])->name('user.signin');
     // Route::get('profile', [UserController::class, 'getProfile'])->name('user.profile');
 });
 

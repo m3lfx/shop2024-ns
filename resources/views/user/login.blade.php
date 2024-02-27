@@ -7,8 +7,8 @@
                 @include('layouts.flash-messages')
             @endif
 
-            {{-- <form class="" action="{{ route('user.sign-in') }}" method="post"> --}}
-            <form class="" action="#" method="post">
+            <form class="" action="{{ route('user.signin') }}" method="post">
+            {{-- <form class="" action="#" method="post"> --}}
                 @csrf
                 <div class="form-group">
                     <label for="email">Email: </label>

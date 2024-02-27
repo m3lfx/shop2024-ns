@@ -49,4 +49,20 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function postSignin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'email| required',
+            'password' => 'required| min:4'
+        ]);
+
+        if (auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
+
+            return redirect('/');
+        } else {
+            return redirect()->route('user.login')
+                ->with('error', 'Email-Address And Password Are Wrong.');
+        }
+    }
 }
