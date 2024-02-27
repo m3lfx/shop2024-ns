@@ -6,8 +6,8 @@
             {{-- @if (count($errors) > 0) --}}
             @include('layouts.flash-messages')
             {{-- @endif --}}
-            {{-- <form class="" action="{{ route('user.signup') }}" method="post"> --}}
-                <form class="" action="#" method="post">
+            <form class="" action="{{ route('user.signup') }}" method="post">
+                {{-- <form class="" action="#" method="post"> --}}
                 @csrf
                 <div class="form-group">
                     <label for="Name"> First Name: </label>
