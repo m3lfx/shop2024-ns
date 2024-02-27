@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,12 @@ Route::get('remove/{id}', [
     ItemController::class, 'getRemoveItem'
 ])->name('removeItem');
 Route::get('checkout', [ItemController::class, 'postCheckout'])->name('checkout');
+Route::prefix('user')->group(function () {
+    Route::get('register', [UserController::class, 'register'])->name('user.register');
+    // Route::post('signup', [UserController::class, 'postSignup'])->name('user.signup');
+    // Route::get('login', [UserController::class, 'login'])->name('user.login');
+    // Route::post('signin', [UserController::class,'postSignin'])->name('user.sign-in');
+    // Route::get('profile', [UserController::class, 'getProfile'])->name('user.profile');
+});
+
 Route::resource('items', ItemController::class);
