@@ -30,7 +30,7 @@ Route::prefix('user')->group(function () {
     Route::post('signup', [UserController::class, 'postSignup'])->name('user.signup');
     Route::get('login', [UserController::class, 'login'])->name('user.login');
     Route::post('signin', [UserController::class,'postSignin'])->name('user.signin');
-    // Route::get('profile', [UserController::class, 'getProfile'])->name('user.profile');
+    Route::get('profile', [UserController::class, 'getProfile'])->name('user.profile');
 });
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
 Route::get('logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');

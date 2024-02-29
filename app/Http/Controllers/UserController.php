@@ -7,6 +7,8 @@ use Auth;
 use App\Models\User;
 use App\Models\Customer;
 
+use DB;
+
 
 class UserController extends Controller
 {
@@ -64,5 +66,20 @@ class UserController extends Controller
             return redirect()->route('user.login')
                 ->with('error', 'Email-Address And Password Are Wrong.');
         }
+    }
+
+    public function getProfile()
+    {
+        $customer = Customer::where('user_id', Auth::id())->first();
+        $orders = DB::table('customer as c')
+            ->join('orderinfo as o', 'o.customer_id', '=', 'c.customer_id')
+            ->join('orderline as ol', 'o.orderinfo_id', '=', 'ol.orderinfo_id')
+            ->join('item as i', 'ol.item_id', '=', 'i.item_id')
+            ->where('c.user_id', Auth::id())
+            ->select('o.orderinfo_id', 'o.date_placed', 'o.status', DB::raw("SUM(ol.quantity * i.sell_price) as total"))
+            ->groupBy('o.orderinfo_id', 'o.date_placed', 'o.status')->get();
+        // dd($orders);
+        // return view('user.profile',compact('orders'));
+        // return 'user profile';
     }
 }
