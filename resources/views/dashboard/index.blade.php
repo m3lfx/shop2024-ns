@@ -9,11 +9,11 @@
         {!! $salesChart->container() !!}
 
     </div>
-    {{-- <div class="container">
+    <div class="container">
         {!! $itemChart->container() !!}
 
-    </div> --}}
+    </div>
     {!! $customerChart->script() !!}
     {!! $salesChart->script() !!}
-    {{-- {!! $itemChart->script() !!}  --}}
+    {!! $itemChart->script() !!} 
 @endsection
