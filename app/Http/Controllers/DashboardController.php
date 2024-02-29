@@ -58,6 +58,8 @@ class DashboardController extends Controller
             ],
         ]);
 
+        // SELECT sum(ol.quantity * i.sell_price), monthname(o.date_placed) FROM orderinfo o inner join orderline ol on o.orderinfo_id = ol.orderinfo_id inner join item i on i.item_id = ol.item_id group by month(o.date_placed);
+
         $sales = DB::table('orderinfo AS o')
             ->join('orderline AS ol', 'o.orderinfo_id', '=', 'ol.orderinfo_id')
             ->join('item AS i', 'ol.item_id', '=', 'i.item_id')
@@ -73,7 +75,7 @@ class DashboardController extends Controller
         $dataset = $salesChart->labels(array_keys($sales));
         $dataset = $salesChart->dataset(
             'Customer Demographics',
-            'horizontalBar',
+            'line',
             array_values($sales)
         );
         $dataset = $dataset->backgroundColor([
