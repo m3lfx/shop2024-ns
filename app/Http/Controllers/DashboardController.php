@@ -7,6 +7,7 @@ use Auth;
 use DB;
 
 use App\Charts\CustomerChart;
+use App\Charts\SalesChart;
 
 class DashboardController extends Controller
 {
@@ -56,7 +57,53 @@ class DashboardController extends Controller
                 ],
             ],
         ]);
-        return view('dashboard.index', compact('customerChart'));
+
+        $sales = DB::table('orderinfo AS o')
+            ->join('orderline AS ol', 'o.orderinfo_id', '=', 'ol.orderinfo_id')
+            ->join('item AS i', 'ol.item_id', '=', 'i.item_id')
+            ->orderBy(DB::raw('month(o.date_placed)'), 'ASC')
+            ->groupBy(DB::raw('monthname(o.date_placed)'))
+            ->pluck(
+                DB::raw('sum(ol.quantity * i.sell_price) AS total'),
+                DB::raw('monthname(o.date_placed) AS month')
+            )
+            ->all();
+        // dd($sales);
+        $salesChart = new SalesChart();
+        $dataset = $salesChart->labels(array_keys($sales));
+        $dataset = $salesChart->dataset(
+            'Customer Demographics',
+            'horizontalBar',
+            array_values($sales)
+        );
+        $dataset = $dataset->backgroundColor([
+            '#7158e2',
+            '#3ae374',
+            '#ff3838',
+        ]);
+        $salesChart->options([
+            'backgroundColor' => '#fff',
+            'fill' => false,
+            'responsive' => true,
+            'legend' => ['display' => true],
+            'tooltips' => ['enabled' => true],
+            'aspectRatio' => 1,
+            'scales' => [
+                'yAxes' => [
+                    [
+                        'display' => true,
+                    ],
+                ],
+                'xAxes' => [
+                    [
+                        'gridLines' => ['display' => false],
+                        'display' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+        return view('dashboard.index', compact('customerChart', 'salesChart'));
     }
     
 }

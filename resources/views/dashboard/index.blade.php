@@ -5,15 +5,15 @@
 
     </div>
     
-    {{-- <div class="container">
+    <div class="container">
         {!! $salesChart->container() !!}
 
-    </div> --}}
+    </div>
     {{-- <div class="container">
         {!! $itemChart->container() !!}
 
     </div> --}}
     {!! $customerChart->script() !!}
-    {{-- {!! $salesChart->script() !!}
-    {!! $itemChart->script() !!} --}}
+     {!! $salesChart->script() !!}
+    {{-- {!! $itemChart->script() !!}  --}}
 @endsection
